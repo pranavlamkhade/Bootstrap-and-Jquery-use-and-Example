@@ -1,0 +1,93 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div style="text-align:center">
+  <h1>
+    Welcome to {{ title }}!
+  </h1>
+ <hr>
+ <div class="container" >
+   <div class="row">
+    <div class="form-bg">
+      <form #regForm='ngForm' (ngSubmit)="Register(regForm)">
+        <h2 class="text-center">Registation Form with Validation</h2><br>
+
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="First Name" name="firstname" required ngModel>
+        </div>
+
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="Last Name" name="lastname" required ngModel>
+        </div>
+
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="Email ID" name="email" email required ngModel #email="ngModel">
+            <span class="help-bpx" *ngIf="email.touched && !email.valid">Please enter valied email address...!</span>
+        </div>
+        <br>
+        <div class="align-center">
+          <button type="submit" class="btn btn-primary" id="Register" [disabled]="!regForm.valid">Register</button>
+        </div>
+      </form>
+    </div>
+   </div>
+ </div><br>
+ <hr>
+
+ <div class="container">
+    <div class="row">
+     <div class="form_bg">
+       <form [formGroup]='signupForm' (ngSubmit)="postData(signupForm)">
+
+         <h2 class="text-center"> Reactive Registation Form </h2><br>
+ 
+         <div class="form-group">
+           <input type="text"  formControlName="fname"  placeholder="Enter Your First Name">
+           <span *ngIf="signupForm.controls['fname'].hasError('required')">First name Required</span>
+         </div>
+ 
+         <div class="form-group">
+             <input type="text"  formControlName="lname" placeholder="Enter Your Last Name"> 
+             <span *ngIf="signupForm.controls['lname'].hasError('required')">Last name Required</span>        
+         </div>
+ 
+         <div class="form-group">
+             <input type="text"  formControlName="emailid"  placeholder="Enter Your Email ID" >
+             <span *ngIf="signupForm.controls['emailid'].hasError('required')">Please enter email</span>
+         </div>
+
+         <div class="form-group">
+            <input type="password"  formControlName ="userpassword"  placeholder="Enter Your Last Password" >
+            <span *ngIf="signupForm.controls['userpassword'].hasError('required')">Please enter password</span>
+
+        </div>
+        <br>
+
+        <div class="align-center">
+            <button type="button" class="btn btn-primary"  (click)="postdata()"  [disabled]="!signupForm.valid">Submit</button>
+            <button type="button" class="btn btn-primary" (click)="resetform()">Reset</button>
+            <button type="button" class="btn btn-primary" (click)="filldata()">Fill Data</button>
+
+        </div>
+        
+       </form>
+     </div>
+    </div>
+  </div>
+  <hr>
+
+
+  <h4>Nested FormArray</h4>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div formArrayName="ContactNos">
+      <div *ngFor="let contact of form.controls.ContactNos.controls; index as i">
+        <input [formControlName]="i" placeholder="Contact No">
+      </div>
+    </div> 
+  </form>
+  <button (click)="onSbmit()">Submit</button>
+  <button (click)="addContactNo()">Add New Contact No</button>
+  <button (click)="setPreset()">Set Preset</button>
+  <br>
+  <hr>
+
+
+<router-outlet></router-outlet>
